@@ -9,42 +9,20 @@ import UIKit
 
 class HomeViewController: UIViewController {
 	
-	// MARK: - Properties
+	enum Section: Int, CaseIterable {
+		case continuous
+	}
 	
-	lazy var sections: [Section] = [
-		TitleSection(title: "DISCOVER NEW PLACES", isShowAllHidden: true),
-		TitleSection(title: "POPULAR THIS WEEK", isShowAllHidden: false),
-		TitleSection(title: "RECENT GALLERY", isShowAllHidden: true)
-	]
-
-	lazy var collectionView: UICollectionView = {
-		let compositionalLayout = UICollectionViewCompositionalLayout { (sectionIndex, environment) -> NSCollectionLayoutSection? in
-			self.sections[sectionIndex].layoutSection()
-		}
+	private var collectionView: UICollectionView!
+	private var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
 		
-		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
-		collectionView.dataSource = self
-		collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: TitleCollectionViewCell.identifier)
-		collectionView.translatesAutoresizingMaskIntoConstraints = false
-		return collectionView
-	}()
-	
 	// MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		setupSubviews()
-		
-//		TMDBMovie.api.send(.popularMovies { result in
-//			switch result {
-//			case .failure:
-//				break
-//
-//			case .success(let movies):
-//				print(movies)
-//			}
-//		})
+		configureDataSource()
 	}
 	
 	// MARK: - View Lifecycle Helpers
@@ -55,14 +33,40 @@ class HomeViewController: UIViewController {
 	}
 	
 	private func setupCollectionView() {
-		view.addSubview(collectionView)
+		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		collectionView.delegate = self
 		
-		NSLayoutConstraint.activate([
-			collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
-			collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-			collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-			collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-		])
+		view.addSubview(collectionView)
+	}
+	
+	private func createLayout() -> UICollectionViewLayout {
+		let configuration = UICollectionViewCompositionalLayoutConfiguration()
+		configuration.interSectionSpacing = 50
+		
+		let layout = UICollectionViewCompositionalLayout(
+			sectionProvider: { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+				guard Section(rawValue: sectionIndex) != nil else { fatalError("unknown section") }
+		
+				let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+				let item = NSCollectionLayoutItem(layoutSize: itemSize)
+				
+				let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(220), heightDimension: .absolute(315))
+				let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+				
+				let section = NSCollectionLayoutSection(group: group)
+				section.orthogonalScrollingBehavior = .continuous
+				
+				let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
+				let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+																																 elementKind: "header-element-kind",
+																																 alignment: .top)
+				
+				section.boundarySupplementaryItems = [header]
+				return section
+		}, configuration: configuration)
+		
+		return layout
 	}
 	
 	private func setupNavigationBar() {
@@ -70,21 +74,47 @@ class HomeViewController: UIViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
+	private func configureDataSource() {
+		let cellRegistration = UICollectionView.CellRegistration<DiscoverCollectionViewCell, Int> { (cell, indexPath, identifier) in
+			cell.contentView.backgroundColor = .red
+			cell.layer.borderWidth = 1.0
+			cell.layer.borderColor = UIColor.white.cgColor
+		}
+		
+		dataSource = UICollectionViewDiffableDataSource<Int, Int>(
+			collectionView: collectionView,
+			cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
+				return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+			}
+		)
+		
+		let headerSupplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(
+			elementKind: "header-element-kind"
+		) { supplementaryView, _, indexPath in
+			let section = Section(rawValue: indexPath.section)!
+			supplementaryView.label.text = String(describing: section)
+		}
+		
+		dataSource.supplementaryViewProvider = { (collectionView, _, indexPath) -> UICollectionReusableView in
+			self.collectionView.dequeueConfiguredReusableSupplementary(using: headerSupplementaryRegistration, for: indexPath)
+		}
+		
+		var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
+		var identifierOffset = 0
+		let itemsPerSection = 18
+		Section.allCases.forEach {
+			snapshot.appendSections([$0.rawValue])
+			let maxIdentifier = identifierOffset + itemsPerSection
+			snapshot.appendItems(Array(identifierOffset..<maxIdentifier))
+			identifierOffset += itemsPerSection
+		}
+		dataSource.apply(snapshot, animatingDifferences: false)
+	}
 }
 
-// MARK: - UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDataSource {
-	
-	func numberOfSections(in collectionView: UICollectionView) -> Int {
-		return sections.count
+// MARK: - UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDelegate {
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		
 	}
-	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		sections[section].numberOfItems
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		sections[indexPath.section].configureCell(collectionView: collectionView, indexPath: indexPath)
-	}
-	
 }

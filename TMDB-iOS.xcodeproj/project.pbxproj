@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C84C415C2722374A00E6A1C6 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84C415B2722374A00E6A1C6 /* TitleSupplementaryView.swift */; };
 		C86AA5962718D2AF00A7EBBC /* AuthenticationTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */; };
 		C86AA5FA271A873B00A7EBBC /* SimpleNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; platformFilter = ios; };
 		C86AA5FB271A873B00A7EBBC /* SimpleNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -24,8 +25,7 @@
 		C8C886072721023D00037925 /* Development_Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C8C886042721023D00037925 /* Development_Config.xcconfig */; };
 		C8C886082721023D00037925 /* Production_Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C8C886052721023D00037925 /* Production_Config.xcconfig */; };
 		C8C886092721023D00037925 /* Staging_Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C8C886062721023D00037925 /* Staging_Config.xcconfig */; };
-		C8C8860B2721443500037925 /* TitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C8860A2721443500037925 /* TitleSection.swift */; };
-		C8C8860D2721446D00037925 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C8860C2721446D00037925 /* TitleCollectionViewCell.swift */; };
+		C8C88619272222B700037925 /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C88618272222B700037925 /* DiscoverCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C84C415B2722374A00E6A1C6 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTokenResponse.swift; sourceTree = "<group>"; };
 		C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleNetworking.xcodeproj; path = ../../SimpleNetworking/SimpleNetworking.xcodeproj; sourceTree = "<group>"; };
 		C8AA113F27123412005DA5A2 /* TMDB-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDB-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,8 +72,7 @@
 		C8C886042721023D00037925 /* Development_Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development_Config.xcconfig; sourceTree = "<group>"; };
 		C8C886052721023D00037925 /* Production_Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production_Config.xcconfig; sourceTree = "<group>"; };
 		C8C886062721023D00037925 /* Staging_Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Staging_Config.xcconfig; sourceTree = "<group>"; };
-		C8C8860A2721443500037925 /* TitleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSection.swift; sourceTree = "<group>"; };
-		C8C8860C2721446D00037925 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		C8C88618272222B700037925 /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +126,6 @@
 				C8AA114D27123416005DA5A2 /* LaunchScreen.storyboard */,
 				C8AA115027123416005DA5A2 /* Info.plist */,
 				C8C8860E27214B0800037925 /* Application */,
-				C8C8860F27214F8A00037925 /* Sections */,
 				C8AA1158271234C6005DA5A2 /* Controllers */,
 				C8AA115C2712367F005DA5A2 /* Models */,
 				C8AA116A271250F4005DA5A2 /* Networking */,
@@ -147,7 +146,8 @@
 		C8AA1159271234CF005DA5A2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C8C8860C2721446D00037925 /* TitleCollectionViewCell.swift */,
+				C84C415B2722374A00E6A1C6 /* TitleSupplementaryView.swift */,
+				C8C88618272222B700037925 /* DiscoverCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,14 +191,6 @@
 				C8AA114427123412005DA5A2 /* SceneDelegate.swift */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		C8C8860F27214F8A00037925 /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				C8C8860A2721443500037925 /* TitleSection.swift */,
-			);
-			path = Sections;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,8 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C84C415C2722374A00E6A1C6 /* TitleSupplementaryView.swift in Sources */,
 				C8AA114327123412005DA5A2 /* AppDelegate.swift in Sources */,
-				C8C8860D2721446D00037925 /* TitleCollectionViewCell.swift in Sources */,
+				C8C88619272222B700037925 /* DiscoverCollectionViewCell.swift in Sources */,
 				C8AA116927125090005DA5A2 /* TMDBMovie.swift in Sources */,
 				C8AA114527123412005DA5A2 /* SceneDelegate.swift in Sources */,
 				C8AA116C271252E1005DA5A2 /* Request+.swift in Sources */,
@@ -300,7 +293,6 @@
 				C8AA1160271236B1005DA5A2 /* Model.swift in Sources */,
 				C86AA5962718D2AF00A7EBBC /* AuthenticationTokenResponse.swift in Sources */,
 				C8AA115727123471005DA5A2 /* HomeViewController.swift in Sources */,
-				C8C8860B2721443500037925 /* TitleSection.swift in Sources */,
 				C8AA116227123993005DA5A2 /* PagedResults.swift in Sources */,
 				C8AA115E27123697005DA5A2 /* Movie.swift in Sources */,
 			);
