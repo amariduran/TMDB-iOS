@@ -23,7 +23,7 @@ class TitleSupplementaryView: UICollectionReusableView {
 	}
 	
 	private func setupSubviews() {
-		label.font = .preferredFont(forTextStyle: .title3)
+		label.font = .preferredFont(forTextStyle: .headline)
 		label.adjustsFontForContentSizeCategory = true
 		label.translatesAutoresizingMaskIntoConstraints = false
 		

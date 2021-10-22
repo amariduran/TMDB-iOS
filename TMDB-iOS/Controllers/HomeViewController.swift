@@ -2,7 +2,7 @@
 //  HomeViewController.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/9/21.
+//  Created by Amari Duran on 10/9/21.
 //
 
 import UIKit
@@ -10,22 +10,17 @@ import UIKit
 class HomeViewController: UIViewController {
 	
 	enum Section: Int, CaseIterable {
-		case continuous
+		case nowPlaying
 	}
 	
 	private var collectionView: UICollectionView!
 	private var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
-		
-	// MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		setupSubviews()
-		configureDataSource()
 	}
-	
-	// MARK: - View Lifecycle Helpers
 	
 	private func setupSubviews() {
 		setupCollectionView()
@@ -33,14 +28,25 @@ class HomeViewController: UIViewController {
 	}
 	
 	private func setupCollectionView() {
-		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
+		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCollectionViewLayout())
 		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		collectionView.delegate = self
 		
 		view.addSubview(collectionView)
+		
+		setupCollectionViewDiffableDataSource()
 	}
 	
-	private func createLayout() -> UICollectionViewLayout {
+	private func setupNavigationBar() {
+		navigationItem.title = "TMDB"
+		navigationController?.navigationBar.prefersLargeTitles = true
+	}
+	
+}
+
+extension HomeViewController {
+	
+	private func createCollectionViewLayout() -> UICollectionViewLayout {
 		let configuration = UICollectionViewCompositionalLayoutConfiguration()
 		configuration.interSectionSpacing = 50
 		
@@ -48,16 +54,21 @@ class HomeViewController: UIViewController {
 			sectionProvider: { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
 				guard Section(rawValue: sectionIndex) != nil else { fatalError("unknown section") }
 		
-				let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+				let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+																							heightDimension: .fractionalHeight(1))
 				let item = NSCollectionLayoutItem(layoutSize: itemSize)
+				item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4)
 				
-				let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(220), heightDimension: .absolute(315))
+				let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(125),
+																							 heightDimension: .absolute(165))
 				let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 				
 				let section = NSCollectionLayoutSection(group: group)
 				section.orthogonalScrollingBehavior = .continuous
+				section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
 				
-				let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
+				let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+																								heightDimension: .estimated(44))
 				let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
 																																 elementKind: "header-element-kind",
 																																 alignment: .top)
@@ -69,16 +80,10 @@ class HomeViewController: UIViewController {
 		return layout
 	}
 	
-	private func setupNavigationBar() {
-		navigationItem.title = "TMDB"
-		navigationController?.navigationBar.prefersLargeTitles = true
-	}
-	
-	private func configureDataSource() {
+	private func setupCollectionViewDiffableDataSource() {
 		let cellRegistration = UICollectionView.CellRegistration<DiscoverCollectionViewCell, Int> { (cell, indexPath, identifier) in
 			cell.contentView.backgroundColor = .red
-			cell.layer.borderWidth = 1.0
-			cell.layer.borderColor = UIColor.white.cgColor
+			cell.contentView.layer.cornerRadius = 4
 		}
 		
 		dataSource = UICollectionViewDiffableDataSource<Int, Int>(
@@ -91,7 +96,7 @@ class HomeViewController: UIViewController {
 		let headerSupplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(
 			elementKind: "header-element-kind"
 		) { supplementaryView, _, indexPath in
-			let section = Section(rawValue: indexPath.section)!
+			guard let section = Section(rawValue: indexPath.section) else { return }
 			supplementaryView.label.text = String(describing: section)
 		}
 		
@@ -110,11 +115,14 @@ class HomeViewController: UIViewController {
 		}
 		dataSource.apply(snapshot, animatingDifferences: false)
 	}
+	
 }
 
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
+	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		
 	}
+	
 }
