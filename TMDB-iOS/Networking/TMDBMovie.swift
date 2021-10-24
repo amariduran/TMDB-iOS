@@ -2,7 +2,7 @@
 //  TMDBMovie.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/9/21.
+//  Created by Amari Duran on 10/9/21.
 //
 
 import Foundation
@@ -20,6 +20,10 @@ struct TMDBMovie {
 			]
 		}
 		
-		return APIClient(configuration: configuration, adapters: [LoggingAdapter(logLevel: .info)])
+		let apiClient = APIClient(configuration: configuration,
+															adapters: [
+																LoggingAdapter(logLevel: .info)
+															])
+		return apiClient
 	}()
 }
