@@ -20,10 +20,6 @@ struct TMDBMovie {
 			]
 		}
 		
-		let apiClient = APIClient(configuration: configuration,
-															adapters: [
-																LoggingAdapter(logLevel: .info)
-															])
-		return apiClient
+		return APIClient(configuration: configuration, adapters: [LoggingAdapter(logLevel: .info)])
 	}()
 }
