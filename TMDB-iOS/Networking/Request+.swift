@@ -2,7 +2,7 @@
 //  Request+.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/9/21.
+//  Created by Amari Duran on 10/9/21.
 //
 
 import Foundation
@@ -20,15 +20,22 @@ extension Request {
 			result.decoding(PagedResults<Movie>.self, completion: completion)
 		}
 	}
-}
-
-extension Request {
-	static func createRequestToken(_ completion: @escaping (Result<AuthenticationTokenResponse, APIError>) -> Void) -> Request {
+	
+	static func nowPlaying(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
 		Request.basic(
 			baseURL: TMDBMovie.baseURL,
-			path: "authentication/token/new"
+			path: ""
 		) { result in
-			result.decoding(AuthenticationTokenResponse.self, completion: completion)
+			result.decoding(PagedResults<Movie>.self, completion: completion)
+		}
+	}
+	
+	static func upcoming(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
+		Request.basic(
+			baseURL: TMDBMovie.baseURL,
+			path: ""
+		) { result in
+			result.decoding(PagedResults<Movie>.self, completion: completion)
 		}
 	}
 }

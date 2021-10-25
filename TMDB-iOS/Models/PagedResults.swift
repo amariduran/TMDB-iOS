@@ -12,10 +12,10 @@ import Foundation
  so we know it is decoable already.
  */
 struct PagedResults<T: Model>: Model {
-	let page: Int
-	let results: [T]
-	let totalPages: Int
-	let totalResults: Int
+	let page: Int?
+	let results: [T]?
+	let totalPages: Int?
+	let totalResults: Int?
 }
 
 extension PagedResults {

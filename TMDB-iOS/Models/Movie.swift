@@ -2,16 +2,46 @@
 //  Movie.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/9/21.
+//  Created by Amari Duran on 10/9/21.
 //
 
 import Foundation
+import UIKit
+
+class MovieViewModel: Hashable {
+	
+	static func == (lhs: MovieViewModel, rhs: MovieViewModel) -> Bool {
+		return true
+	}
+	
+	func hash(into hasher: inout Hasher) {
+		hasher.combine(movie.id)
+	}
+	
+	var posterImage: UIImage?
+	var movie: Movie
+	
+	init(movie: Movie, image: UIImage? = nil) {
+		self.movie = movie
+		self.posterImage = image
+	}
+}
 
 struct Movie: Model, Hashable {
-	let id: Int
-	let title: String
-	let posterPath: String
-	let releaseDate: Date
+	let posterPath: String?
+	let adult: Bool?
+	let overview: String?
+	let releaseDate: Date?
+	let genreIDs: Int?
+	let id: Int?
+	let originalTitle: String?
+	let originalLanguage: String?
+	let title: String?
+	let backdropPath: String?
+	let popularity: Float?
+	let voteCount: Int?
+	let video: Bool?
+	let voteAverage: Float?
 	
 	static var releaseDateFormatter: DateFormatter {
 		let dateFormatter = DateFormatter()

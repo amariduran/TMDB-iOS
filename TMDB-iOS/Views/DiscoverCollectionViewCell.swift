@@ -10,8 +10,20 @@ import UIKit
 class DiscoverCollectionViewCell: UICollectionViewCell {
 	static let identifier = String(describing: self)
 	
+	var imageView = UIImageView()
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		
+		
+		imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		contentView.addSubview(imageView)
+		
+		imageView.frame = contentView.bounds
+		
+		contentView.layer.cornerRadius = 4
+		contentView.layer.backgroundColor = UIColor.systemCyan.cgColor
+		contentView.layer.masksToBounds = true
 	}
 
 	required init?(coder: NSCoder) {

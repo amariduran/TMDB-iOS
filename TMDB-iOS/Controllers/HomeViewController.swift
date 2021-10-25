@@ -6,21 +6,38 @@
 //
 
 import UIKit
+import SimpleNetworking
 
 class HomeViewController: UIViewController {
 	
 	enum Section: Int, CaseIterable {
-		case nowPlaying
+		case nowPlaying, popular, upcoming
+		
+		var title: String {
+			switch self {
+			case .nowPlaying: return "Now Playing"
+			case .popular: return "Popular"
+			case .upcoming: return "Upcoming"
+			}
+		}
 	}
 	
+	private var dataSource: UICollectionViewDiffableDataSource<Section, MovieViewModel>!
 	private var collectionView: UICollectionView!
-	private var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
+	
+	private var imageObjects = [MovieViewModel]()
+	
+	// MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		setupSubviews()
+		setupDataSource()
+		fetchData()
 	}
+	
+	// MARK: - View Lifecycle Helpers
 	
 	private func setupSubviews() {
 		setupCollectionView()
@@ -33,8 +50,6 @@ class HomeViewController: UIViewController {
 		collectionView.delegate = self
 		
 		view.addSubview(collectionView)
-		
-		setupCollectionViewDiffableDataSource()
 	}
 	
 	private func setupNavigationBar() {
@@ -42,13 +57,73 @@ class HomeViewController: UIViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
+	private func fetchData() {
+		var dict: [String: [MovieViewModel]] = [
+			Section.popular.title: [],
+			Section.nowPlaying.title: [],
+			Section.upcoming.title: []
+		]
+		
+		// make network requests then be notified when they're all done. I think this is perfect for
+		// something called a semaphor
+		
+		let dispatchGroup = DispatchGroup()
+//		var errors: [APIError] = []
+		
+		dispatchGroup.enter()
+		TMDBMovie.api.send(.popularMovies { result in
+			dispatchGroup.leave()
+			switch result {
+			case .failure(let error):
+				break
+//				errors.append(error)
+			case .success(let data):
+				dict[Section.popular.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			}
+		})
+		
+//		dispatchGroup.enter()
+//		TMDBMovie.api.send(.nowPlaying { result in
+//			dispatchGroup.leave()
+//			switch result {
+//			case .failure(let error):
+//				errors.append(error)
+//			case .success(let data):
+//				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+//			}
+//		})
+
+//		dispatchGroup.enter()
+//		TMDBMovie.api.send(.upcoming { result in
+//			dispatchGroup.leave()
+//			switch result {
+//			case .failure(let error):
+//				errors.append(error)
+//			case .success(let data):
+//				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+//			}
+//		})
+		
+		dispatchGroup.notify(queue: .main) {
+//			if errors != nil {
+//				UIAlertController.presentAlert(message: "Unable to fetch all data.", from: self)
+//			}
+			
+			var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
+			snapshot.appendSections(Section.allCases)
+			snapshot.appendItems(dict[Section.popular.title]!, toSection: .popular)
+			snapshot.appendItems(dict[Section.nowPlaying.title]!, toSection: .nowPlaying)
+			snapshot.appendItems(dict[Section.upcoming.title]!, toSection: .upcoming)
+			self.dataSource.apply(snapshot, animatingDifferences: false)
+		}
+	}
 }
 
 extension HomeViewController {
 	
 	private func createCollectionViewLayout() -> UICollectionViewLayout {
 		let configuration = UICollectionViewCompositionalLayoutConfiguration()
-		configuration.interSectionSpacing = 50
+		configuration.interSectionSpacing = 16
 		
 		let layout = UICollectionViewCompositionalLayout(
 			sectionProvider: { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
@@ -80,40 +155,36 @@ extension HomeViewController {
 		return layout
 	}
 	
-	private func setupCollectionViewDiffableDataSource() {
-		let cellRegistration = UICollectionView.CellRegistration<DiscoverCollectionViewCell, Int> { (cell, indexPath, identifier) in
-			cell.contentView.backgroundColor = .red
-			cell.contentView.layer.cornerRadius = 4
+	private func setupDataSource() {
+		let cellRegistration = UICollectionView.CellRegistration<DiscoverCollectionViewCell, MovieViewModel>
+		{ cell, indexPath, viewModel in
+			let url = URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.movie.posterPath!)")! as NSURL
+			ImageCache.shared.load(url: url) { image, error in
+				DispatchQueue.main.async {
+					cell.imageView.image = image
+				}
+			}
 		}
 		
-		dataSource = UICollectionViewDiffableDataSource<Int, Int>(
-			collectionView: collectionView,
-			cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
-				return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
-			}
-		)
+		dataSource = UICollectionViewDiffableDataSource<Section, MovieViewModel>(
+			collectionView: collectionView
+		) { collectionView, indexPath, viewModel in
+			return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+																													for: indexPath,
+																													item: viewModel)
+		}
 		
 		let headerSupplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(
 			elementKind: "header-element-kind"
-		) { supplementaryView, _, indexPath in
+		) { supplementaryView, elementKind, indexPath in
 			guard let section = Section(rawValue: indexPath.section) else { return }
-			supplementaryView.label.text = String(describing: section)
+			supplementaryView.label.text = section.title
 		}
-		
-		dataSource.supplementaryViewProvider = { (collectionView, _, indexPath) -> UICollectionReusableView in
-			self.collectionView.dequeueConfiguredReusableSupplementary(using: headerSupplementaryRegistration, for: indexPath)
+
+		dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
+			self.collectionView.dequeueConfiguredReusableSupplementary(using: headerSupplementaryRegistration,
+																																 for: indexPath)
 		}
-		
-		var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
-		var identifierOffset = 0
-		let itemsPerSection = 18
-		Section.allCases.forEach {
-			snapshot.appendSections([$0.rawValue])
-			let maxIdentifier = identifierOffset + itemsPerSection
-			snapshot.appendItems(Array(identifierOffset..<maxIdentifier))
-			identifierOffset += itemsPerSection
-		}
-		dataSource.apply(snapshot, animatingDifferences: false)
 	}
 	
 }
@@ -122,7 +193,9 @@ extension HomeViewController {
 extension HomeViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		guard let viewModel = dataSource.itemIdentifier(for: indexPath) else { return }
 		
+		let detailViewController = MovieDetailViewController(viewModel: viewModel)
+		navigationController?.pushViewController(detailViewController, animated: true)
 	}
-	
 }

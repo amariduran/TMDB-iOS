@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C848326F27261E6700BC2EA7 /* UIAlertController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C848326E27261E6700BC2EA7 /* UIAlertController+.swift */; };
+		C8483273272622B400BC2EA7 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8483272272622B400BC2EA7 /* MovieDetailViewController.swift */; };
 		C84C415C2722374A00E6A1C6 /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84C415B2722374A00E6A1C6 /* TitleSupplementaryView.swift */; };
+		C84C415F2723772400E6A1C6 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84C415E2723772400E6A1C6 /* ImageCache.swift */; };
 		C86AA5962718D2AF00A7EBBC /* AuthenticationTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */; };
 		C86AA5FA271A873B00A7EBBC /* SimpleNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; platformFilter = ios; };
 		C86AA5FB271A873B00A7EBBC /* SimpleNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -53,7 +56,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C848326E27261E6700BC2EA7 /* UIAlertController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+.swift"; sourceTree = "<group>"; };
+		C8483272272622B400BC2EA7 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		C84C415B2722374A00E6A1C6 /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
+		C84C415E2723772400E6A1C6 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTokenResponse.swift; sourceTree = "<group>"; };
 		C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleNetworking.xcodeproj; path = ../../SimpleNetworking/SimpleNetworking.xcodeproj; sourceTree = "<group>"; };
 		C8AA113F27123412005DA5A2 /* TMDB-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDB-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +93,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C848327127261F0C00BC2EA7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C848326E27261E6700BC2EA7 /* UIAlertController+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C86AA5CD271A761C00A7EBBC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +145,7 @@
 				C8AA116A271250F4005DA5A2 /* Networking */,
 				C8AA116527123F2F005DA5A2 /* Resources */,
 				C8AA1159271234CF005DA5A2 /* Views */,
+				C848327127261F0C00BC2EA7 /* Extensions */,
 			);
 			path = "TMDB-iOS";
 			sourceTree = "<group>";
@@ -139,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				C8AA115627123471005DA5A2 /* HomeViewController.swift */,
+				C8483272272622B400BC2EA7 /* MovieDetailViewController.swift */,
+				C84C415E2723772400E6A1C6 /* ImageCache.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -284,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C84C415C2722374A00E6A1C6 /* TitleSupplementaryView.swift in Sources */,
+				C84C415F2723772400E6A1C6 /* ImageCache.swift in Sources */,
 				C8AA114327123412005DA5A2 /* AppDelegate.swift in Sources */,
 				C8C88619272222B700037925 /* DiscoverCollectionViewCell.swift in Sources */,
 				C8AA116927125090005DA5A2 /* TMDBMovie.swift in Sources */,
@@ -293,8 +311,10 @@
 				C8AA1160271236B1005DA5A2 /* Model.swift in Sources */,
 				C86AA5962718D2AF00A7EBBC /* AuthenticationTokenResponse.swift in Sources */,
 				C8AA115727123471005DA5A2 /* HomeViewController.swift in Sources */,
+				C8483273272622B400BC2EA7 /* MovieDetailViewController.swift in Sources */,
 				C8AA116227123993005DA5A2 /* PagedResults.swift in Sources */,
 				C8AA115E27123697005DA5A2 /* Movie.swift in Sources */,
+				C848326F27261E6700BC2EA7 /* UIAlertController+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
