@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  MoviesViewController.swift
 //  TMDB-iOS
 //
 //  Created by Amari Duran on 10/9/21.
@@ -8,7 +8,7 @@
 import UIKit
 import SimpleNetworking
 
-class HomeViewController: UIViewController {
+class MoviesViewController: UIViewController {
 	
 	enum Section: Int, CaseIterable {
 		case nowPlaying, popular, upcoming
@@ -121,7 +121,7 @@ class HomeViewController: UIViewController {
 	}
 }
 
-extension HomeViewController {
+extension MoviesViewController {
 	
 	private func createCollectionViewLayout() -> UICollectionViewLayout {
 		let configuration = UICollectionViewCompositionalLayoutConfiguration()
@@ -199,7 +199,7 @@ extension HomeViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate {
+extension MoviesViewController: UICollectionViewDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let viewModel = dataSource.itemIdentifier(for: indexPath) else { return }

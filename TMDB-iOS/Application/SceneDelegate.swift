@@ -19,9 +19,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		let window = UIWindow(windowScene: windowScene)
 		window.overrideUserInterfaceStyle = .dark
-		window.rootViewController = UINavigationController(rootViewController: HomeViewController())
-		window.makeKeyAndVisible()
 		
+		let tabBarController = UITabBarController()
+		
+		let moviesVC = MoviesViewController()
+		moviesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 0)
+		
+		let favoritesVC = FavoritesViewController()
+		favoritesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+		
+		tabBarController.viewControllers = [
+			UINavigationController(rootViewController: moviesVC),
+			UINavigationController(rootViewController: favoritesVC)
+		]
+		
+		window.rootViewController = tabBarController
+		window.makeKeyAndVisible()
 		self.window = window
 	}
 	
