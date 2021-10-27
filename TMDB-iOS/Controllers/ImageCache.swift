@@ -16,32 +16,38 @@ public class ImageCache {
 		cache.object(forKey: url)
 	}
 	
-	func load(url: NSURL, _ completion: @escaping (UIImage?, Error?) -> Void) {
-		let task = URLSession.shared.downloadTask(with: url as URL) { localURL, response, error in
+	final func load(url: NSURL, completion: @escaping (Result<UIImage?, Error>) -> Void) {
+		if let cachedImage = image(url: url) {
+			DispatchQueue.main.async {
+				completion(.success(cachedImage))
+				return
+			}
+		}
+		
+		URLSession.shared.dataTask(with: url as URL) { data, response, error in
 			if let error = error {
-				completion(nil, error)
+				completion(.failure(error))
+				return
 			}
 			
 			guard let httpURLResponse = response as? HTTPURLResponse,
 							(200...299).contains(httpURLResponse.statusCode) else {
-				completion(nil, NSError())
+				completion(.failure(NSError()))
 				return
 			}
 			
-			guard let localURL = localURL else {
-				completion(nil, NSError())
+			guard let data = data,
+							let image = UIImage(data: data) else {
+				completion(.failure(NSError()))
 				return
 			}
+
+			self.cache.setObject(image, forKey: url)
 			
-			do {
-				let data = try Data(contentsOf: localURL)
-				let image = UIImage(data: data)
-				completion(image, nil)
-			} catch {
-				completion(nil, error)
+			DispatchQueue.main.async {
+				completion(.success(image))
 			}
-		}
-		task.resume()
+		}.resume()
 	}
 	
 }

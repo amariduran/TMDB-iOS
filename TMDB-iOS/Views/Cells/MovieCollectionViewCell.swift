@@ -10,7 +10,13 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
 //	static let reuseIdentifier = String(describing: self)
 	
-	var imageView = UIImageView()
+	var viewModel: MovieViewModel? {
+		didSet {
+			imageView.image = viewModel?.posterImage
+		}
+	}
+	
+	private var imageView = UIImageView()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)

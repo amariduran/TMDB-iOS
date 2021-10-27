@@ -79,6 +79,8 @@ class HomeViewController: UIViewController {
 //				errors.append(error)
 			case .success(let data):
 				dict[Section.popular.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
 			}
 		})
 		
@@ -145,7 +147,7 @@ extension HomeViewController {
 				let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
 																								heightDimension: .estimated(44))
 				let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-																																 elementKind: "header-element-kind",
+																																 elementKind: UICollectionView.elementKindSectionHeader,
 																																 alignment: .top)
 				
 				section.boundarySupplementaryItems = [header]
@@ -156,34 +158,41 @@ extension HomeViewController {
 	}
 	
 	private func setupDataSource() {
-		let cellRegistration = UICollectionView.CellRegistration<DiscoverCollectionViewCell, MovieViewModel>
-		{ cell, indexPath, viewModel in
-			let url = URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.movie.posterPath!)")! as NSURL
-			ImageCache.shared.load(url: url) { image, error in
-				DispatchQueue.main.async {
-					cell.imageView.image = image
+		let cellRegistration = UICollectionView.CellRegistration<MovieCollectionViewCell, MovieViewModel>(
+			handler: { (cell, indexPath, viewModel) -> Void in
+				let url = URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.movie.posterPath!)")! as NSURL
+				ImageCache.shared.load(url: url) { result in
+					switch result {
+					case .failure:
+						break
+					case .success(let image):
+						viewModel.posterImage = image
+						cell.viewModel = viewModel
+					}
 				}
 			}
-		}
+		)
 		
 		dataSource = UICollectionViewDiffableDataSource<Section, MovieViewModel>(
-			collectionView: collectionView
-		) { collectionView, indexPath, viewModel in
-			return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
-																													for: indexPath,
-																													item: viewModel)
-		}
+			collectionView: collectionView,
+			cellProvider: { (collectionView, indexPath, viewModel) -> UICollectionViewCell? in
+				return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+																														for: indexPath,
+																														item: viewModel)
+			}
+		)
 		
-		let headerSupplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(
-			elementKind: "header-element-kind"
-		) { supplementaryView, elementKind, indexPath in
-			guard let section = Section(rawValue: indexPath.section) else { return }
-			supplementaryView.label.text = section.title
-		}
-
-		dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
-			self.collectionView.dequeueConfiguredReusableSupplementary(using: headerSupplementaryRegistration,
-																																 for: indexPath)
+		let headerRegistration = UICollectionView.SupplementaryRegistration<SectionHeaderReusableView>(
+			elementKind: UICollectionView.elementKindSectionHeader,
+			handler: { (supplementaryView, elementKind, indexPath) -> Void in
+				let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+				supplementaryView.titleLabel.text = section.title
+			}
+		)
+		
+		dataSource.supplementaryViewProvider = { (collectionView, elementKind, indexPath) -> UICollectionReusableView in
+			return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration,
+																																	 for: indexPath)
 		}
 	}
 	
@@ -198,4 +207,5 @@ extension HomeViewController: UICollectionViewDelegate {
 		let detailViewController = MovieDetailViewController(viewModel: viewModel)
 		navigationController?.pushViewController(detailViewController, animated: true)
 	}
+	
 }
