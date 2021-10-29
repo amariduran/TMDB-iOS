@@ -9,22 +9,26 @@ import Foundation
 import SimpleNetworking
 
 extension Request {
-	static func popularMovies(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
+	
+	static func popular(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
 		Request.basic(
 			baseURL: TMDBMovie.baseURL,
-			path: "discover/movie",
+			path: "/movie/now_playing",
 			params: [
-				URLQueryItem(name: "sort_by", value: "popularity.desc")
+				URLQueryItem(name: "language", value: "en-US")
 			]
 		) { result in
 			result.decoding(PagedResults<Movie>.self, completion: completion)
 		}
 	}
 	
-	static func nowPlaying(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
+	static func topRated(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
 		Request.basic(
 			baseURL: TMDBMovie.baseURL,
-			path: ""
+			path: "/movie/top_rated",
+			params: [
+				URLQueryItem(name: "language", value: "en-US")
+			]
 		) { result in
 			result.decoding(PagedResults<Movie>.self, completion: completion)
 		}
@@ -33,9 +37,13 @@ extension Request {
 	static func upcoming(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
 		Request.basic(
 			baseURL: TMDBMovie.baseURL,
-			path: ""
+			path: "/movie/upcoming",
+			params: [
+				URLQueryItem(name: "language", value: "en-US")
+			]
 		) { result in
 			result.decoding(PagedResults<Movie>.self, completion: completion)
 		}
 	}
+	
 }

@@ -23,7 +23,6 @@ extension Result where Success == Data, Failure == APIError {
 	 to express our intent with great clarity: take the result, decode into this type, then call this completion.
 	 */
 	func decoding<M: Model>(_ model: M.Type, completion: @escaping (Result<M, APIError>) -> Void) {
-		// Dispatch onto a background queue.
 		DispatchQueue.global().async {
 			let result = self.flatMap { data -> Result<M, APIError> in
 				do {

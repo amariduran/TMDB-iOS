@@ -11,12 +11,12 @@ import SimpleNetworking
 class MoviesViewController: UIViewController {
 	
 	enum Section: Int, CaseIterable {
-		case nowPlaying, popular, upcoming
+		case nowPlaying, topRated, upcoming
 		
 		var title: String {
 			switch self {
 			case .nowPlaying: return "Now Playing"
-			case .popular: return "Popular"
+			case .topRated: return "Top Rated"
 			case .upcoming: return "Upcoming"
 			}
 		}
@@ -59,7 +59,7 @@ class MoviesViewController: UIViewController {
 	
 	private func fetchData() {
 		var dict: [String: [MovieViewModel]] = [
-			Section.popular.title: [],
+			Section.topRated.title: [],
 			Section.nowPlaying.title: [],
 			Section.upcoming.title: []
 		]
@@ -71,40 +71,40 @@ class MoviesViewController: UIViewController {
 //		var errors: [APIError] = []
 		
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.popularMovies { result in
+		TMDBMovie.api.send(.popular { result in
 			dispatchGroup.leave()
 			switch result {
-			case .failure(let error):
+			case .failure:
 				break
-//				errors.append(error)
+
 			case .success(let data):
-				dict[Section.popular.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
-				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
-				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+				dict[Section.topRated.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
 			}
 		})
 		
-//		dispatchGroup.enter()
-//		TMDBMovie.api.send(.nowPlaying { result in
-//			dispatchGroup.leave()
-//			switch result {
-//			case .failure(let error):
-//				errors.append(error)
-//			case .success(let data):
-//				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
-//			}
-//		})
+		dispatchGroup.enter()
+		TMDBMovie.api.send(.topRated { result in
+			dispatchGroup.leave()
+			switch result {
+			case .failure:
+				break
+				
+			case .success(let data):
+				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			}
+		})
 
-//		dispatchGroup.enter()
-//		TMDBMovie.api.send(.upcoming { result in
-//			dispatchGroup.leave()
-//			switch result {
-//			case .failure(let error):
-//				errors.append(error)
-//			case .success(let data):
-//				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
-//			}
-//		})
+		dispatchGroup.enter()
+		TMDBMovie.api.send(.upcoming { result in
+			dispatchGroup.leave()
+			switch result {
+			case .failure:
+				break
+				
+			case .success(let data):
+				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			}
+		})
 		
 		dispatchGroup.notify(queue: .main) {
 //			if errors != nil {
@@ -113,7 +113,7 @@ class MoviesViewController: UIViewController {
 			
 			var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
 			snapshot.appendSections(Section.allCases)
-			snapshot.appendItems(dict[Section.popular.title]!, toSection: .popular)
+			snapshot.appendItems(dict[Section.topRated.title]!, toSection: .topRated)
 			snapshot.appendItems(dict[Section.nowPlaying.title]!, toSection: .nowPlaying)
 			snapshot.appendItems(dict[Section.upcoming.title]!, toSection: .upcoming)
 			self.dataSource.apply(snapshot, animatingDifferences: false)

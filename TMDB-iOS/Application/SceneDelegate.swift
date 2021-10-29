@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/9/21.
+//  Created by Amari Duran on 10/9/21.
 //
 
 import UIKit

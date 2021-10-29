@@ -9,7 +9,7 @@ import Foundation
 import SimpleNetworking
 
 struct TMDBMovie {
-	static let baseURL = URL(string: "https://api.themoviedb.org/3/")!
+	static let baseURL = URL(string: "https://api.themoviedb.org/3")!
 	
 	static var api: APIClient = {
 		let configuration = URLSessionConfiguration.default

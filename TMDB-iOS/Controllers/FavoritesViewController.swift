@@ -2,7 +2,7 @@
 //  FavoritesViewController.swift
 //  TMDB-iOS
 //
-//  Created by Cleopatra on 10/27/21.
+//  Created by Amari Duran on 10/27/21.
 //
 
 import UIKit

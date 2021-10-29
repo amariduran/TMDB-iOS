@@ -14,6 +14,7 @@ import Foundation
 struct PagedResults<T: Model>: Model {
 	let page: Int?
 	let results: [T]?
+//	let dates: [TMDBDate]?
 	let totalPages: Int?
 	let totalResults: Int?
 }
@@ -22,4 +23,9 @@ extension PagedResults {
 	// The trick here is that we somehow need this PagedResults to be decoded with the right decoder, since it may have
 	// special requirements for dates, and so on. As it turns out we can just use T's decoder.
 	static var decoder: JSONDecoder { T.decoder }
+}
+
+struct TMDBDate: Model, Hashable {
+	let maximum: String?
+	let minimum: String?
 }
