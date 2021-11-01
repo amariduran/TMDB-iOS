@@ -25,7 +25,9 @@ class MoviesViewController: UIViewController {
 	private var dataSource: UICollectionViewDiffableDataSource<Section, MovieViewModel>!
 	private var collectionView: UICollectionView!
 	
-	private var imageObjects = [MovieViewModel]()
+	private var nowPlayingMovies = [MovieViewModel]()
+	private var topRatedMovies = [MovieViewModel]()
+	private var upcomingMovies = [MovieViewModel]()
 	
 	// MARK: - View Lifecycle
 	
@@ -58,67 +60,54 @@ class MoviesViewController: UIViewController {
 	}
 	
 	private func fetchData() {
-		var dict: [String: [MovieViewModel]] = [
-			Section.topRated.title: [],
-			Section.nowPlaying.title: [],
-			Section.upcoming.title: []
-		]
-		
-		// make network requests then be notified when they're all done. I think this is perfect for
-		// something called a semaphor
-		
 		let dispatchGroup = DispatchGroup()
-//		var errors: [APIError] = []
 		
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.popular { result in
+		TMDBMovie.api.send(.nowPlaying { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
-			case .failure:
-				break
-
-			case .success(let data):
-				dict[Section.topRated.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			case .success(let page):
+				self.nowPlayingMovies = page.results?.map { MovieViewModel(movie: $0) } ?? []
+				
+			case .failure(let error):
+				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
 			}
 		})
 		
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.topRated { result in
+		TMDBMovie.api.send(.topRated { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
-			case .failure:
-				break
+			case .success(let page):
+				self.topRatedMovies = page.results?.map{ MovieViewModel(movie: $0) } ?? []
 				
-			case .success(let data):
-				dict[Section.nowPlaying.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			case .failure(let error):
+				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
 			}
 		})
 
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.upcoming { result in
+		TMDBMovie.api.send(.upcoming { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
-			case .failure:
-				break
+			case .success(let page):
+				self.upcomingMovies = page.results?.map{ MovieViewModel(movie: $0) } ?? []
 				
-			case .success(let data):
-				dict[Section.upcoming.title] = data.results?.map{ MovieViewModel(movie: $0) } ?? []
+			case .failure(let error):
+				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
 			}
 		})
 		
 		dispatchGroup.notify(queue: .main) {
-//			if errors != nil {
-//				UIAlertController.presentAlert(message: "Unable to fetch all data.", from: self)
-//			}
-			
 			var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
 			snapshot.appendSections(Section.allCases)
-			snapshot.appendItems(dict[Section.topRated.title]!, toSection: .topRated)
-			snapshot.appendItems(dict[Section.nowPlaying.title]!, toSection: .nowPlaying)
-			snapshot.appendItems(dict[Section.upcoming.title]!, toSection: .upcoming)
+			snapshot.appendItems(self.topRatedMovies, toSection: .topRated)
+			snapshot.appendItems(self.nowPlayingMovies, toSection: .nowPlaying)
+			snapshot.appendItems(self.upcomingMovies, toSection: .upcoming)
 			self.dataSource.apply(snapshot, animatingDifferences: false)
 		}
 	}
+	
 }
 
 extension MoviesViewController {
@@ -200,7 +189,7 @@ extension MoviesViewController {
 
 // MARK: - UICollectionViewDelegate
 extension MoviesViewController: UICollectionViewDelegate {
-	
+
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let viewModel = dataSource.itemIdentifier(for: indexPath) else { return }
 		

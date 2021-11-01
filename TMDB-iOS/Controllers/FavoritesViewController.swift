@@ -9,10 +9,19 @@ import UIKit
 
 class FavoritesViewController: UIViewController {
 	
+	let sessionManager = SessionManager()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
 		
-		// Do any additional setup after loading the view.
 	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		sessionManager.startLogin(from: self)
+	}
+	
 	
 }

@@ -2,18 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>APIV4AuthKey</key>
-	<string>$(APIV4AuthKey)</string>
+	<key>APIReadAccessToken</key>
+	<string>$(APIReadAccessToken)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>TMDB-iOS</string>
+			<string>tmdb-ios</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>TMDB-IOS</string>
+				<string>tmdb-ios</string>
 			</array>
 		</dict>
 	</array>

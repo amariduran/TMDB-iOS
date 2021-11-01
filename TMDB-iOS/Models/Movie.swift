@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SimpleNetworking
 
 class MovieViewModel: Hashable {
 	

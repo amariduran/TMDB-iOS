@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SimpleNetworking
 
 /*
  To make authenticated requests as a user, TMDB uses an asynchronous session approval flow using a web browser and a
@@ -14,9 +15,9 @@ import Foundation
  The first step in this process is to request a new authentication token.
  */
 struct AuthenticationTokenResponse: Model {
-	let success: Bool
-	let expiresAt: Date
-	let requestToken: String
+	let success: Bool?
+	let expiresAt: Date?
+	let requestToken: String?
 }
 
 /*
@@ -34,7 +35,6 @@ extension AuthenticationTokenResponse {
 		
 		decoder.dateDecodingStrategy = .formatted(dateFormatter)
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
-		
 		return decoder
 	}
 }
