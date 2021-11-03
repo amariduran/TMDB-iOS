@@ -21,16 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window.overrideUserInterfaceStyle = .dark
 		
 		let tabBarController = UITabBarController()
-		
-		let moviesVC = MoviesViewController()
-		moviesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 0)
-		
-		let favoritesVC = FavoritesViewController()
-		favoritesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+		let sessionManager = SessionManager()
 		
 		tabBarController.viewControllers = [
-			UINavigationController(rootViewController: moviesVC),
-			UINavigationController(rootViewController: favoritesVC)
+			UINavigationController(rootViewController: MoviesViewController(sessionManager: sessionManager)),
+			UINavigationController(rootViewController: FavoritesViewController(sessionManager: sessionManager))
 		]
 		
 		window.rootViewController = tabBarController

@@ -9,7 +9,7 @@ import Foundation
 import SimpleNetworking
 
 extension Request {
-	
+
 	static func nowPlaying(_ completion: @escaping (Result<PagedResults<Movie>, APIError>) -> Void) -> Request {
 		Request.basic(
 			baseURL: TMDBMovie.baseURL,
@@ -49,6 +49,7 @@ extension Request {
 }
 
 extension Request {
+	
 	// Create a temporary request token that can be used to validate a TMDB user login.
 	// The token expires after 60 minutes if not used.
 	static func requestToken(_ completion: @escaping (Result<AuthenticationTokenResponse, APIError>) -> Void) -> Request {
@@ -65,17 +66,15 @@ extension Request {
 	// password and keep it secret.
 	static func createSession(requestToken: String,
 														_ completion: @escaping (Result<CreateSessionResponse, APIError>) -> Void) -> Request {
-		struct Body: Model {
-			let requestToken: String
-		}
-		
-		return Request.post(
+		let request = Request.post(
 			baseURL: TMDBMovie.baseURL,
 			path: "authentication/session/new",
-			body: Body(requestToken: requestToken)
+			body: CreateSessionRequest(requestToken: requestToken)
 		) { result in
 			result.decoding(CreateSessionResponse.self, completion: completion)
 		}
+		
+		return request
 	}
 	
 }

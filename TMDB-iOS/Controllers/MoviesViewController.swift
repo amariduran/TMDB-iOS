@@ -11,7 +11,9 @@ import SimpleNetworking
 class MoviesViewController: UIViewController {
 	
 	enum Section: Int, CaseIterable {
-		case nowPlaying, topRated, upcoming
+		case nowPlaying
+		case topRated
+		case upcoming
 		
 		var title: String {
 			switch self {
@@ -29,6 +31,20 @@ class MoviesViewController: UIViewController {
 	private var topRatedMovies = [MovieViewModel]()
 	private var upcomingMovies = [MovieViewModel]()
 	
+	private var sessionManager: SessionManager
+	
+	// MARK: - Initialization
+	
+	init(sessionManager: SessionManager) {
+		self.sessionManager = sessionManager
+		
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
 	// MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
@@ -44,12 +60,15 @@ class MoviesViewController: UIViewController {
 	private func setupSubviews() {
 		setupCollectionView()
 		setupNavigationBar()
+		setupTabBar()
 	}
 	
 	private func setupCollectionView() {
 		collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCollectionViewLayout())
-		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 		collectionView.delegate = self
+		collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		collectionView.showsVerticalScrollIndicator = false
+		
 		
 		view.addSubview(collectionView)
 	}
@@ -59,46 +78,96 @@ class MoviesViewController: UIViewController {
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
+	private func setupTabBar() {
+		tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 0)
+	}
+	
+	private func setupDataSource() {
+		let cellRegistration = UICollectionView.CellRegistration<MovieCollectionViewCell, MovieViewModel>(
+			handler: { (cell, indexPath, viewModel) -> Void in
+				let url = URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.movie.posterPath!)")! as NSURL
+				ImageCache.shared.load(url: url) { result in
+					switch result {
+					case .failure:
+						break
+					case .success(let image):
+						viewModel.posterImage = image
+						cell.viewModel = viewModel
+					}
+				}
+			}
+		)
+		
+		dataSource = UICollectionViewDiffableDataSource<Section, MovieViewModel>(
+			collectionView: collectionView,
+			cellProvider: { (collectionView, indexPath, viewModel) -> UICollectionViewCell? in
+				return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
+																														for: indexPath,
+																														item: viewModel)
+			}
+		)
+		
+		let headerRegistration = UICollectionView.SupplementaryRegistration<SectionHeaderReusableView>(
+			elementKind: UICollectionView.elementKindSectionHeader,
+			handler: { (supplementaryView, elementKind, indexPath) -> Void in
+				let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+				supplementaryView.titleLabel.text = section.title
+			}
+		)
+		
+		dataSource.supplementaryViewProvider = { (collectionView, elementKind, indexPath) -> UICollectionReusableView in
+			return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration,
+																																	 for: indexPath)
+		}
+	}
+	
 	private func fetchData() {
 		let dispatchGroup = DispatchGroup()
+		var errors = [APIError]()
 		
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.nowPlaying { [unowned self] result in
+		TMDBMovie.api.send(request: .nowPlaying { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
 			case .success(let page):
 				self.nowPlayingMovies = page.results?.map { MovieViewModel(movie: $0) } ?? []
 				
 			case .failure(let error):
-				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
+				errors.append(error)
 			}
 		})
 		
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.topRated { [unowned self] result in
+		TMDBMovie.api.send(request: .topRated { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
 			case .success(let page):
 				self.topRatedMovies = page.results?.map{ MovieViewModel(movie: $0) } ?? []
 				
 			case .failure(let error):
-				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
+				errors.append(error)
 			}
 		})
 
 		dispatchGroup.enter()
-		TMDBMovie.api.send(.upcoming { [unowned self] result in
+		TMDBMovie.api.send(request: .upcoming { [unowned self] result in
 			dispatchGroup.leave()
 			switch result {
 			case .success(let page):
 				self.upcomingMovies = page.results?.map{ MovieViewModel(movie: $0) } ?? []
 				
 			case .failure(let error):
-				UIAlertController.presentAlert(title: "Error", message: error.localizedDescription, from: self)
+				errors.append(error)
 			}
 		})
 		
 		dispatchGroup.notify(queue: .main) {
+			if !errors.isEmpty {
+				errors.forEach {
+					print($0.localizedDescription)
+				}
+			}
+			
 			var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
 			snapshot.appendSections(Section.allCases)
 			snapshot.appendItems(self.topRatedMovies, toSection: .topRated)
@@ -144,45 +213,6 @@ extension MoviesViewController {
 		}, configuration: configuration)
 		
 		return layout
-	}
-	
-	private func setupDataSource() {
-		let cellRegistration = UICollectionView.CellRegistration<MovieCollectionViewCell, MovieViewModel>(
-			handler: { (cell, indexPath, viewModel) -> Void in
-				let url = URL(string: "https://image.tmdb.org/t/p/w500\(viewModel.movie.posterPath!)")! as NSURL
-				ImageCache.shared.load(url: url) { result in
-					switch result {
-					case .failure:
-						break
-					case .success(let image):
-						viewModel.posterImage = image
-						cell.viewModel = viewModel
-					}
-				}
-			}
-		)
-		
-		dataSource = UICollectionViewDiffableDataSource<Section, MovieViewModel>(
-			collectionView: collectionView,
-			cellProvider: { (collectionView, indexPath, viewModel) -> UICollectionViewCell? in
-				return collectionView.dequeueConfiguredReusableCell(using: cellRegistration,
-																														for: indexPath,
-																														item: viewModel)
-			}
-		)
-		
-		let headerRegistration = UICollectionView.SupplementaryRegistration<SectionHeaderReusableView>(
-			elementKind: UICollectionView.elementKindSectionHeader,
-			handler: { (supplementaryView, elementKind, indexPath) -> Void in
-				let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-				supplementaryView.titleLabel.text = section.title
-			}
-		)
-		
-		dataSource.supplementaryViewProvider = { (collectionView, elementKind, indexPath) -> UICollectionReusableView in
-			return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration,
-																																	 for: indexPath)
-		}
 	}
 	
 }

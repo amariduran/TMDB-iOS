@@ -9,24 +9,24 @@ import SafariServices
 
 class SessionManager {
 	
-	var sessionId: String?
+	var currentSessionId: String? {
+		didSet {
+			print("SessionID: \(currentSessionId)")
+		}
+	}
 	
 	var isLoggedIn: Bool {
-		return sessionId != nil
+		return currentSessionId != nil
 	}
 	
 	func startLogin(from viewController: UIViewController) {
-		TMDBMovie.api.send(.requestToken { result in
+		TMDBMovie.api.send(request: .requestToken { result in
 			switch result {
 			case .success(let response):
 				self.authorizeRequestToken(response.requestToken, from: viewController)
 				
 			case .failure(let error):
-				let alertController = UIAlertController(title: "Error fetching request token.",
-																								message: error.localizedDescription,
-																								preferredStyle: .alert)
-				alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-				viewController.present(alertController, animated: true, completion: nil)
+				print("Error fetching request token: ", error.localizedDescription)
 			}
 		})
 	}
@@ -36,65 +36,44 @@ class SessionManager {
 	// URL, the page will also have a Authentication-Callback header. This header contains the API call to create
 	// a session ID. You can either manually generate it or simply use the one we return.
 	private func authorizeRequestToken(_ requestToken: String?, from viewController: UIViewController) {
-		guard let requestToken = requestToken else { return }
-		guard let url = URL(string: "https://www.themoviedb.org/authenticate/\(requestToken)?redirect_to=tmdb-ios://auth") else { return }
+		guard let requestToken = requestToken,
+					let url = URL(string: "https://www.themoviedb.org/authenticate/\(requestToken)?redirect_to=tmdb-ios://auth") else {
+			return
+		}
 		
-		let safariVC = SFSafariViewController(url: url)
-		viewController.present(safariVC, animated: true, completion: nil)
+		let safariViewController = SFSafariViewController(url: url)
+		viewController.present(safariViewController, animated: true, completion: nil)
 
 		AuthenticationCallbackHandler.shared.requestTokenApprovalCallback = { approved in
 			viewController.dismiss(animated: true) {
 				if approved {
-					
+					self.startSession(requestToken: requestToken) { _ in
+						
+					}
 				} else {
-					let alertController = UIAlertController(title: "Request denied",
-																									message: "You must approve the login request to log in.",
-																									preferredStyle: .alert)
-					alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-					viewController.present(alertController, animated: true, completion: nil)
+					print("Request denied. You must approve the login request to log in.")
 				}
 			}
 		}
 	}
 	
 	private func startSession(requestToken: String, completion: @escaping (Bool) -> Void) {
-		TMDBMovie.api.send(.createSession(
+		TMDBMovie.api.send(request: .createSession(
 			requestToken: requestToken
 		) { result in
 			switch result {
 			case .success(let response):
-				self.sessionId = response.sessionId
+				if response.success {
+					self.currentSessionId = response.sessionId
+				}
+				
+				completion(response.success)
 				
 			case .failure(let error):
-				print(error.localizedDescription)
+				print("Error: ", error)
 				completion(false)
 			}
 		})
 	}
-	
-//	private func startSession(requestToken: String, completion: @escaping (Bool) -> Void) {
-//			MovieDB.api.send(request: .createSession(requestToken: requestToken) { result in
-//					switch result {
-//					case .success(let response):
-//							if response.success {
-//									self.currentSessionId = response.sessionId
-//									Current.accountManager.fetchAccount { result in
-//											switch result {
-//											case .success(let account):
-//													self.currentAccountId = account.id
-//													NotificationCenter.default.post(name: SessionManager.currentUserDidChange, object: self)
-//											case .failure(let error):
-//													print("Error fetching account", error)
-//											}
-//									}
-//							}
-//							completion(response.success)
-//
-//					case .failure(let error):
-//							print("Error: ", error)
-//							completion(false)
-//					}
-//			})
-//	}
 	
 }

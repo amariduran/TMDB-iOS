@@ -14,12 +14,26 @@
 		C84C415C2722374A00E6A1C6 /* SectionHeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84C415B2722374A00E6A1C6 /* SectionHeaderReusableView.swift */; };
 		C84C415F2723772400E6A1C6 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84C415E2723772400E6A1C6 /* ImageCache.swift */; };
 		C86AA5962718D2AF00A7EBBC /* AuthenticationTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */; };
-		C86AA5FA271A873B00A7EBBC /* SimpleNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; platformFilter = ios; };
-		C86AA5FB271A873B00A7EBBC /* SimpleNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C880B1E127308CA8003773F5 /* URLSchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C880B1E027308CA8003773F5 /* URLSchemeHandler.swift */; };
 		C880B1E427308F67003773F5 /* AuthenticationCallbackHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C880B1E327308F67003773F5 /* AuthenticationCallbackHandler.swift */; };
+		C880B1E62730D6DD003773F5 /* CreateSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C880B1E52730D6DD003773F5 /* CreateSessionRequest.swift */; };
 		C890494F272C9434000898EB /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C890494E272C9434000898EB /* SessionManager.swift */; };
 		C8904952272F8487000898EB /* CreateSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8904951272F8486000898EB /* CreateSessionResponse.swift */; };
+		C89604782732266E00865D9F /* SimpleNetworking.docc in Sources */ = {isa = PBXBuildFile; fileRef = C89604772732266E00865D9F /* SimpleNetworking.docc */; };
+		C89604792732266E00865D9F /* SimpleNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = C89604762732266E00865D9F /* SimpleNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C896047C2732266E00865D9F /* SimpleNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C89604742732266E00865D9F /* SimpleNetworking.framework */; };
+		C896047D2732266E00865D9F /* SimpleNetworking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C89604742732266E00865D9F /* SimpleNetworking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C89604A9273227AD00865D9F /* BasicRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896049E273227AC00865D9F /* BasicRequestBuilder.swift */; };
+		C89604AA273227AD00865D9F /* PostRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C896049F273227AC00865D9F /* PostRequestBuilder.swift */; };
+		C89604AB273227AD00865D9F /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A0273227AC00865D9F /* APIClient.swift */; };
+		C89604AC273227AD00865D9F /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A2273227AC00865D9F /* RequestBuilder.swift */; };
+		C89604AD273227AD00865D9F /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A3273227AC00865D9F /* Model.swift */; };
+		C89604AE273227AD00865D9F /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A4273227AD00865D9F /* APIError.swift */; };
+		C89604AF273227AD00865D9F /* RequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A5273227AD00865D9F /* RequestAdapter.swift */; };
+		C89604B0273227AD00865D9F /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A6273227AD00865D9F /* HTTPMethod.swift */; };
+		C89604B1273227AD00865D9F /* LoggingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A7273227AD00865D9F /* LoggingAdapter.swift */; };
+		C89604B2273227AD00865D9F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A8273227AD00865D9F /* Request.swift */; };
+		C89604B42732471400865D9F /* BackgroundMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604B32732471400865D9F /* BackgroundMessageView.swift */; };
 		C8AA114327123412005DA5A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA114227123412005DA5A2 /* AppDelegate.swift */; };
 		C8AA114527123412005DA5A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA114427123412005DA5A2 /* SceneDelegate.swift */; };
 		C8AA114C27123416005DA5A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8AA114B27123416005DA5A2 /* Assets.xcassets */; };
@@ -38,11 +52,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C86AA5D0271A761C00A7EBBC /* PBXContainerItemProxy */ = {
+		C896047A2732266E00865D9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C86AA5A32718E7FA00A7EBBC;
+			containerPortal = C8AA113727123412005DA5A2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C89604732732266E00865D9F;
 			remoteInfo = SimpleNetworking;
 		};
 /* End PBXContainerItemProxy section */
@@ -54,7 +68,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C86AA5FB271A873B00A7EBBC /* SimpleNetworking.framework in Embed Frameworks */,
+				C896047D2732266E00865D9F /* SimpleNetworking.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,11 +83,25 @@
 		C84C415B2722374A00E6A1C6 /* SectionHeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderReusableView.swift; sourceTree = "<group>"; };
 		C84C415E2723772400E6A1C6 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTokenResponse.swift; sourceTree = "<group>"; };
-		C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleNetworking.xcodeproj; path = ../../SimpleNetworking/SimpleNetworking.xcodeproj; sourceTree = "<group>"; };
 		C880B1E027308CA8003773F5 /* URLSchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSchemeHandler.swift; sourceTree = "<group>"; };
 		C880B1E327308F67003773F5 /* AuthenticationCallbackHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCallbackHandler.swift; sourceTree = "<group>"; };
+		C880B1E52730D6DD003773F5 /* CreateSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionRequest.swift; sourceTree = "<group>"; };
 		C890494E272C9434000898EB /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		C8904951272F8486000898EB /* CreateSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionResponse.swift; sourceTree = "<group>"; };
+		C89604742732266E00865D9F /* SimpleNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SimpleNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C89604762732266E00865D9F /* SimpleNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleNetworking.h; sourceTree = "<group>"; };
+		C89604772732266E00865D9F /* SimpleNetworking.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SimpleNetworking.docc; sourceTree = "<group>"; };
+		C896049E273227AC00865D9F /* BasicRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicRequestBuilder.swift; sourceTree = "<group>"; };
+		C896049F273227AC00865D9F /* PostRequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostRequestBuilder.swift; sourceTree = "<group>"; };
+		C89604A0273227AC00865D9F /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		C89604A2273227AC00865D9F /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		C89604A3273227AC00865D9F /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		C89604A4273227AD00865D9F /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		C89604A5273227AD00865D9F /* RequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestAdapter.swift; sourceTree = "<group>"; };
+		C89604A6273227AD00865D9F /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		C89604A7273227AD00865D9F /* LoggingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggingAdapter.swift; sourceTree = "<group>"; };
+		C89604A8273227AD00865D9F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		C89604B32732471400865D9F /* BackgroundMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMessageView.swift; sourceTree = "<group>"; };
 		C8AA113F27123412005DA5A2 /* TMDB-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDB-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8AA114227123412005DA5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8AA114427123412005DA5A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,11 +122,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C89604712732266E00865D9F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8AA113C27123412005DA5A2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C86AA5FA271A873B00A7EBBC /* SimpleNetworking.framework in Frameworks */,
+				C896047C2732266E00865D9F /* SimpleNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,17 +156,10 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		C86AA5CD271A761C00A7EBBC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		C86AA5F8271A873B00A7EBBC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C89604752732266E00865D9F /* SimpleNetworking */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,6 +171,33 @@
 				C880B1E327308F67003773F5 /* AuthenticationCallbackHandler.swift */,
 			);
 			path = URLSchemes;
+			sourceTree = "<group>";
+		};
+		C89604752732266E00865D9F /* SimpleNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				C89604A0273227AC00865D9F /* APIClient.swift */,
+				C89604A4273227AD00865D9F /* APIError.swift */,
+				C896049E273227AC00865D9F /* BasicRequestBuilder.swift */,
+				C89604A6273227AD00865D9F /* HTTPMethod.swift */,
+				C89604A7273227AD00865D9F /* LoggingAdapter.swift */,
+				C89604A3273227AC00865D9F /* Model.swift */,
+				C896049F273227AC00865D9F /* PostRequestBuilder.swift */,
+				C89604A8273227AD00865D9F /* Request.swift */,
+				C89604A5273227AD00865D9F /* RequestAdapter.swift */,
+				C89604A1273227AC00865D9F /* RequestBuilder */,
+				C89604A2273227AC00865D9F /* RequestBuilder.swift */,
+				C89604762732266E00865D9F /* SimpleNetworking.h */,
+				C89604772732266E00865D9F /* SimpleNetworking.docc */,
+			);
+			path = SimpleNetworking;
+			sourceTree = "<group>";
+		};
+		C89604A1273227AC00865D9F /* RequestBuilder */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RequestBuilder;
 			sourceTree = "<group>";
 		};
 		C8AA113627123412005DA5A2 = {
@@ -158,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				C8AA113F27123412005DA5A2 /* TMDB-iOS.app */,
+				C89604742732266E00865D9F /* SimpleNetworking.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,7 +221,6 @@
 		C8AA114127123412005DA5A2 /* TMDB-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */,
 				C8AA114D27123416005DA5A2 /* LaunchScreen.storyboard */,
 				C8AA115027123416005DA5A2 /* Info.plist */,
 				C8C8860E27214B0800037925 /* Application */,
@@ -195,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				C84C415B2722374A00E6A1C6 /* SectionHeaderReusableView.swift */,
+				C89604B32732471400865D9F /* BackgroundMessageView.swift */,
 				C84832742727A12200BC2EA7 /* Cells */,
 			);
 			path = Views;
@@ -204,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				C86AA5952718D2AF00A7EBBC /* AuthenticationTokenResponse.swift */,
+				C880B1E52730D6DD003773F5 /* CreateSessionRequest.swift */,
 				C8904951272F8486000898EB /* CreateSessionResponse.swift */,
 				C8AA115D27123697005DA5A2 /* Movie.swift */,
 				C8BF5ACA272B95B5000B8636 /* MovieDate.swift */,
@@ -246,7 +303,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		C896046F2732266E00865D9F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C89604792732266E00865D9F /* SimpleNetworking.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		C89604732732266E00865D9F /* SimpleNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C89604822732266E00865D9F /* Build configuration list for PBXNativeTarget "SimpleNetworking" */;
+			buildPhases = (
+				C896046F2732266E00865D9F /* Headers */,
+				C89604702732266E00865D9F /* Sources */,
+				C89604712732266E00865D9F /* Frameworks */,
+				C89604722732266E00865D9F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleNetworking;
+			productName = SimpleNetworking;
+			productReference = C89604742732266E00865D9F /* SimpleNetworking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		C8AA113E27123412005DA5A2 /* TMDB-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C8AA115327123416005DA5A2 /* Build configuration list for PBXNativeTarget "TMDB-iOS" */;
@@ -259,6 +345,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C896047B2732266E00865D9F /* PBXTargetDependency */,
 			);
 			name = "TMDB-iOS";
 			productName = "TMDB-iOS";
@@ -275,6 +362,9 @@
 				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					C89604732732266E00865D9F = {
+						CreatedOnToolsVersion = 13.1;
+					};
 					C8AA113E27123412005DA5A2 = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -291,30 +381,22 @@
 			mainGroup = C8AA113627123412005DA5A2;
 			productRefGroup = C8AA114027123412005DA5A2 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C86AA5CD271A761C00A7EBBC /* Products */;
-					ProjectRef = C86AA5C1271A726900A7EBBC /* SimpleNetworking.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				C8AA113E27123412005DA5A2 /* TMDB-iOS */,
+				C89604732732266E00865D9F /* SimpleNetworking */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		C86AA5D1271A761C00A7EBBC /* SimpleNetworking.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SimpleNetworking.framework;
-			remoteRef = C86AA5D0271A761C00A7EBBC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
+		C89604722732266E00865D9F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8AA113D27123412005DA5A2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -330,6 +412,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C89604702732266E00865D9F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C89604AC273227AD00865D9F /* RequestBuilder.swift in Sources */,
+				C89604AF273227AD00865D9F /* RequestAdapter.swift in Sources */,
+				C89604AA273227AD00865D9F /* PostRequestBuilder.swift in Sources */,
+				C89604A9273227AD00865D9F /* BasicRequestBuilder.swift in Sources */,
+				C89604B2273227AD00865D9F /* Request.swift in Sources */,
+				C89604AD273227AD00865D9F /* Model.swift in Sources */,
+				C89604B0273227AD00865D9F /* HTTPMethod.swift in Sources */,
+				C89604782732266E00865D9F /* SimpleNetworking.docc in Sources */,
+				C89604B1273227AD00865D9F /* LoggingAdapter.swift in Sources */,
+				C89604AB273227AD00865D9F /* APIClient.swift in Sources */,
+				C89604AE273227AD00865D9F /* APIError.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8AA113B27123412005DA5A2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,8 +438,10 @@
 				C84C415F2723772400E6A1C6 /* ImageCache.swift in Sources */,
 				C8AA114327123412005DA5A2 /* AppDelegate.swift in Sources */,
 				C880B1E127308CA8003773F5 /* URLSchemeHandler.swift in Sources */,
+				C880B1E62730D6DD003773F5 /* CreateSessionRequest.swift in Sources */,
 				C890494F272C9434000898EB /* SessionManager.swift in Sources */,
 				C8C88619272222B700037925 /* MovieCollectionViewCell.swift in Sources */,
+				C89604B42732471400865D9F /* BackgroundMessageView.swift in Sources */,
 				C8AA116927125090005DA5A2 /* TMDBMovie.swift in Sources */,
 				C8AA114527123412005DA5A2 /* SceneDelegate.swift in Sources */,
 				C8AA116C271252E1005DA5A2 /* Request+.swift in Sources */,
@@ -360,6 +462,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C896047B2732266E00865D9F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C89604732732266E00865D9F /* SimpleNetworking */;
+			targetProxy = C896047A2732266E00865D9F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		C8AA114D27123416005DA5A2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -372,6 +482,249 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C896047E2732266E00865D9F /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = P244M8PUET;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.julio-hernandez-duran.SimpleNetworking";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Development;
+		};
+		C896047F2732266E00865D9F /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = P244M8PUET;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.julio-hernandez-duran.SimpleNetworking";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Staging;
+		};
+		C89604802732266E00865D9F /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = P244M8PUET;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.julio-hernandez-duran.SimpleNetworking";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Production;
+		};
 		C89756712720DBA400130D74 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8C886062721023D00037925 /* Staging_Config.xcconfig */;
@@ -437,6 +790,7 @@
 		C89756722720DBA400130D74 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -581,6 +935,7 @@
 		C8AA115427123416005DA5A2 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -607,6 +962,7 @@
 		C8AA115527123416005DA5A2 /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -633,6 +989,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C89604822732266E00865D9F /* Build configuration list for PBXNativeTarget "SimpleNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C896047E2732266E00865D9F /* Development */,
+				C896047F2732266E00865D9F /* Staging */,
+				C89604802732266E00865D9F /* Production */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Development;
+		};
 		C8AA113A27123412005DA5A2 /* Build configuration list for PBXProject "TMDB-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
