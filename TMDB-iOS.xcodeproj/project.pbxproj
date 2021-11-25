@@ -33,7 +33,6 @@
 		C89604B0273227AD00865D9F /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A6273227AD00865D9F /* HTTPMethod.swift */; };
 		C89604B1273227AD00865D9F /* LoggingAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A7273227AD00865D9F /* LoggingAdapter.swift */; };
 		C89604B2273227AD00865D9F /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604A8273227AD00865D9F /* Request.swift */; };
-		C89604B42732471400865D9F /* BackgroundMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89604B32732471400865D9F /* BackgroundMessageView.swift */; };
 		C8AA114327123412005DA5A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA114227123412005DA5A2 /* AppDelegate.swift */; };
 		C8AA114527123412005DA5A2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AA114427123412005DA5A2 /* SceneDelegate.swift */; };
 		C8AA114C27123416005DA5A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8AA114B27123416005DA5A2 /* Assets.xcassets */; };
@@ -101,7 +100,6 @@
 		C89604A6273227AD00865D9F /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		C89604A7273227AD00865D9F /* LoggingAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggingAdapter.swift; sourceTree = "<group>"; };
 		C89604A8273227AD00865D9F /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		C89604B32732471400865D9F /* BackgroundMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundMessageView.swift; sourceTree = "<group>"; };
 		C8AA113F27123412005DA5A2 /* TMDB-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TMDB-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8AA114227123412005DA5A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8AA114427123412005DA5A2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,19 +183,11 @@
 				C896049F273227AC00865D9F /* PostRequestBuilder.swift */,
 				C89604A8273227AD00865D9F /* Request.swift */,
 				C89604A5273227AD00865D9F /* RequestAdapter.swift */,
-				C89604A1273227AC00865D9F /* RequestBuilder */,
 				C89604A2273227AC00865D9F /* RequestBuilder.swift */,
 				C89604762732266E00865D9F /* SimpleNetworking.h */,
 				C89604772732266E00865D9F /* SimpleNetworking.docc */,
 			);
 			path = SimpleNetworking;
-			sourceTree = "<group>";
-		};
-		C89604A1273227AC00865D9F /* RequestBuilder */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RequestBuilder;
 			sourceTree = "<group>";
 		};
 		C8AA113627123412005DA5A2 = {
@@ -250,7 +240,6 @@
 			isa = PBXGroup;
 			children = (
 				C84C415B2722374A00E6A1C6 /* SectionHeaderReusableView.swift */,
-				C89604B32732471400865D9F /* BackgroundMessageView.swift */,
 				C84832742727A12200BC2EA7 /* Cells */,
 			);
 			path = Views;
@@ -441,7 +430,6 @@
 				C880B1E62730D6DD003773F5 /* CreateSessionRequest.swift in Sources */,
 				C890494F272C9434000898EB /* SessionManager.swift in Sources */,
 				C8C88619272222B700037925 /* MovieCollectionViewCell.swift in Sources */,
-				C89604B42732471400865D9F /* BackgroundMessageView.swift in Sources */,
 				C8AA116927125090005DA5A2 /* TMDBMovie.swift in Sources */,
 				C8AA114527123412005DA5A2 /* SceneDelegate.swift in Sources */,
 				C8AA116C271252E1005DA5A2 /* Request+.swift in Sources */,
